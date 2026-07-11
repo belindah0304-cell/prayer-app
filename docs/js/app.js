@@ -366,7 +366,7 @@ function buildPrayScreen() {
     const footer = document.createElement('div');
     footer.className = 'pray-footer'; footer.id = 'prayFooter';
     const prevBtn = document.createElement('button');
-    prevBtn.className = 'btn-hail-minus'; prevBtn.id = 'btnPrev'; prevBtn.textContent = '← Previous';
+    prevBtn.className = 'btn-next secondary'; prevBtn.id = 'btnPrev'; prevBtn.textContent = '← Previous';
     prevBtn.addEventListener('click', goBack);
     footer.appendChild(prevBtn);
     const btn = document.createElement('button');

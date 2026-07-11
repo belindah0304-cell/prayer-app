@@ -357,7 +357,7 @@ function buildPrayScreen() {
     // Footer
     const footer = el('div', 'pray-footer');
     footer.id = 'prayFooter';
-    const prevBtn = el('button', 'btn-hail-minus');
+    const prevBtn = el('button', 'btn-next secondary');
     prevBtn.id = 'btnPrev';
     prevBtn.textContent = '← Previous';
     prevBtn.addEventListener('click', goBack);
