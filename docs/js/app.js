@@ -480,13 +480,13 @@ function renderSlide(step) {
         const done = hailMaryCount + 1;
         hdr.textContent = `Hail Mary ${done} of ${step.count}`;
         slide.innerHTML = `<div class="prayer-scroll"><div class="prayer-type-tag">${step.section}</div><div class="mystery-title">Hail Mary</div><div class="prayer-text">${fp(PRAYERS.hailMary.text)}</div></div>`;
-        btn.textContent = done < step.count ? `Next Hail Mary (${done+1}/${step.count})` : 'Glory Be →'; btn.className = 'btn-next';
+        btn.textContent = done < step.count ? 'Next Hail Mary' : 'Glory Be →'; btn.className = 'btn-next';
 
     } else if (step.type === 'hailMary-decade') {
         const done = hailMaryCount + 1;
         hdr.textContent = `Hail Mary ${done} of 10`;
         slide.innerHTML = `<div class="prayer-scroll"><div class="prayer-type-tag">Decade ${step.decade}</div><div class="mystery-title">Hail Mary</div><div class="prayer-text">${fp(PRAYERS.hailMary.text)}</div></div>`;
-        btn.textContent = done < 10 ? `Next Hail Mary (${done+1}/10)` : 'Glory Be →'; btn.className = 'btn-next';
+        btn.textContent = done < 10 ? 'Next Hail Mary' : 'Glory Be →'; btn.className = 'btn-next';
 
     } else if (step.type === 'mystery-announce') {
         const m = step.mystery;
@@ -506,13 +506,13 @@ function renderSlide(step) {
         const done = hailMaryCount + 1;
         hdr.textContent = step.section;
         slide.innerHTML = `<div class="prayer-scroll"><div class="prayer-type-tag">${step.section}</div><div class="hail-count">${done}</div><div class="hail-of">of ${p.repeat}</div><div class="mystery-title">${p.title}</div><div class="prayer-text">${fp(p.text)}</div></div>`;
-        btn.textContent = done < p.repeat ? `Again (${done+1}/${p.repeat})` : 'Continue →'; btn.className = 'btn-next';
+        btn.textContent = done < p.repeat ? 'Again' : 'Continue →'; btn.className = 'btn-next';
 
     } else if (step.type === 'chaplet-decade') {
         const done = hailMaryCount + 1;
         hdr.textContent = step.section;
         slide.innerHTML = `<div class="prayer-scroll"><div class="prayer-type-tag">Decade ${step.decade}</div><div class="mystery-title">For the sake of His sorrowful Passion</div><div class="prayer-text">${fp(CHAPLET_PRAYERS.forTheSake.text)}</div><div class="hail-hint">${done < 10 ? `${10-done} remaining` : 'Last one'}</div></div>`;
-        btn.textContent = done < 10 ? `Next (${done+1}/10)` : 'Continue →'; btn.className = 'btn-next';
+        btn.textContent = done < 10 ? 'Next' : 'Continue →'; btn.className = 'btn-next';
 
     } else if (step.type === 'sh-announce') {
         const m = step.mystery;
@@ -530,7 +530,7 @@ function renderSlide(step) {
         const done = hailMaryCount + 1;
         hdr.textContent = step.section;
         slide.innerHTML = `<div class="prayer-scroll"><div class="prayer-type-tag">Decade ${step.decade}</div><div class="mystery-title">${SACRED_HEART_PRAYERS.hailMary.title}</div><div class="prayer-text">${fp(SACRED_HEART_PRAYERS.hailMary.text)}</div><div class="hail-hint">${done < 10 ? `${10-done} remaining` : 'Last one'}</div></div>`;
-        btn.textContent = done < 10 ? `Next (${done+1}/10)` : 'Continue →'; btn.className = 'btn-next';
+        btn.textContent = done < 10 ? 'Next' : 'Continue →'; btn.className = 'btn-next';
 
     } else if (step.type === 'sh-glory-be') {
         const p = SACRED_HEART_PRAYERS.gloryBe;
