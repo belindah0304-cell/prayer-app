@@ -591,6 +591,11 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+.btn-hail-minus:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
 /* Finished screen */
 .finished-screen {
     height: 100vh;

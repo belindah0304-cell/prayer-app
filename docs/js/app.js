@@ -212,7 +212,9 @@ function renderSinglePrayer(slug) {
 // All session logic runs inline — adapted from rosary.js
 
 const PRAYERS = {
-    apostlesCreed: { title: "Apostles' Creed", text: `I believe in God, the Father Almighty, Creator of Heaven and earth;\nand in Jesus Christ, His only Son Our Lord,\nWho was conceived by the Holy Spirit, born of the Virgin Mary,\nsuffered under Pontius Pilate, was crucified, died, and was buried.\nHe descended into Hell; the third day He rose again from the dead;\nHe ascended into Heaven, and sitteth at the right hand of God, the Father Almighty;\nfrom thence He shall come to judge the living and the dead.\nI believe in the Holy Spirit, the holy Catholic Church,\nthe communion of saints, the forgiveness of sins,\nthe resurrection of the body and life everlasting. Amen.` },
+    lordOpenMyLips: { title: "Lord, Open Our Lips", text: `Lord, open our lips,\nand our tongues shall announce thy praise.` },
+    inclineToMyAid: { title: "O God, Come to Our Aid", text: `Incline to our aid, O God;\nO Lord, make haste to help us.` },
+    apostlesCreed: { title: "Apostles' Creed", text: `I believe in God, the Father Almighty, Creator of Heaven and earth;\nand in Jesus Christ, His only Son Our Lord,\nWho was conceived by the Holy Spirit, born of the Virgin Mary,\nsuffered under Pontius Pilate, was crucified, died, and was buried.\nHe descended into Hell; the third day He rose again from the dead;\nHe ascended into Heaven, and sits at the right hand of God, the Father Almighty;\nfrom there He shall come to judge the living and the dead.\nI believe in the Holy Spirit, the holy Catholic Church,\nthe communion of saints, the forgiveness of sins,\nthe resurrection of the body and life everlasting. Amen.` },
     ourFather: { title: "Our Father", text: `Our Father, Who art in heaven,\nhallowed be Thy name;\nThy kingdom come,\nThy will be done on earth as it is in Heaven.\nGive us this day our daily bread;\nand forgive us our trespasses,\nas we forgive those who trespass against us;\nand lead us not into temptation,\nbut deliver us from evil. Amen.` },
     hailMary: { title: "Hail Mary", text: `Hail Mary, full of grace,\nthe Lord is with thee.\nBlessed art thou among women,\nand blessed is the fruit of thy womb, Jesus.\nHoly Mary, Mother of God,\npray for us sinners,\nnow and at the hour of our death. Amen.` },
     gloryBe: { title: "Glory Be", text: `Glory be to the Father, and to the Son,\nand to the Holy Spirit;\nas it was in the beginning, is now,\nand ever shall be,\nworld without end. Amen.` },
@@ -252,6 +254,9 @@ function initPraySession(mystery) {
 
 function buildSteps(data) {
     const s = [];
+    s.push({ type:'prayer', prayer:'lordOpenMyLips', section:'Opening' });
+    s.push({ type:'prayer', prayer:'inclineToMyAid', section:'Opening' });
+    s.push({ type:'prayer', prayer:'gloryBe', section:'Opening' });
     s.push({ type:'prayer', prayer:'apostlesCreed', section:'Opening' });
     s.push({ type:'prayer', prayer:'ourFather',     section:'Opening' });
     s.push({ type:'hailMary-group', count:3,        section:'Opening', label:'3 Hail Marys for Faith, Hope & Charity' });
@@ -360,6 +365,10 @@ function buildPrayScreen() {
 
     const footer = document.createElement('div');
     footer.className = 'pray-footer'; footer.id = 'prayFooter';
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'btn-hail-minus'; prevBtn.id = 'btnPrev'; prevBtn.textContent = '← Previous';
+    prevBtn.addEventListener('click', goBack);
+    footer.appendChild(prevBtn);
     const btn = document.createElement('button');
     btn.className = 'btn-next'; btn.id = 'btnNext'; btn.textContent = 'Continue';
     btn.addEventListener('click', advance);
@@ -369,7 +378,11 @@ function buildPrayScreen() {
 
     let startX = 0;
     screen.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive:true });
-    screen.addEventListener('touchend',   e => { if (startX - e.changedTouches[0].clientX > 60) advance(); }, { passive:true });
+    screen.addEventListener('touchend',   e => {
+        const dx = startX - e.changedTouches[0].clientX;
+        if (dx > 60) advance();
+        else if (dx < -60) goBack();
+    }, { passive:true });
 
     return screen;
 }
@@ -381,6 +394,8 @@ function updateProgress() {
     if (fill) fill.style.width = pct + '%';
     const badge = document.getElementById('counterBadge');
     if (badge) badge.textContent = currentStep + ' / ' + total;
+    const prevBtn = document.getElementById('btnPrev');
+    if (prevBtn) prevBtn.disabled = (currentStep === 0 && hailMaryCount === 0);
 }
 
 function updateBeadTrack() {
@@ -426,9 +441,10 @@ function stepToBeadIndex(stepIdx, hailCount) {
     return rosaryBeadIndex(stepIdx, hailCount);
 }
 function rosaryBeadIndex(stepIdx, hailCount) {
-    if (stepIdx === 0) return 0; if (stepIdx === 1) return 0;
-    if (stepIdx === 2) return 1 + hailCount; if (stepIdx === 3) return 3;
-    const di = Math.floor((stepIdx-4)/5), pos = (stepIdx-4)%5, bo = 5+di*12;
+    if (stepIdx <= 4) return 0; // lordOpenMyLips, inclineToMyAid, gloryBe, apostlesCreed, ourFather
+    if (stepIdx === 5) return 1 + hailCount;
+    if (stepIdx === 6) return 3;
+    const di = Math.floor((stepIdx-7)/5), pos = (stepIdx-7)%5, bo = 5+di*12;
     if (pos===0||pos===1) return bo; if (pos===2) return bo+1+hailCount;
     if (pos===3||pos===4) return bo+10; return 0;
 }
@@ -533,13 +549,26 @@ function renderSlide(step) {
     currentSlide = slide;
 }
 
+function repeatMaxFor(step) {
+    if (step.type === 'hailMary-group') return step.count - 1;
+    if (step.type === 'hailMary-decade') return 9;
+    if (step.type === 'chaplet-repeat') return CHAPLET_PRAYERS[step.prayer].repeat - 1;
+    if (step.type === 'chaplet-decade' || step.type === 'sh-decade') return 9;
+    return 0;
+}
+
 function advance() {
     const step = steps[currentStep];
-    if (step.type === 'hailMary-group' && hailMaryCount < step.count - 1) { hailMaryCount++; renderSlide(step); updateBeadTrack(); return; }
-    if (step.type === 'hailMary-decade' && hailMaryCount < 9) { hailMaryCount++; renderSlide(step); updateBeadTrack(); return; }
-    if (step.type === 'chaplet-repeat' && hailMaryCount < CHAPLET_PRAYERS[step.prayer].repeat - 1) { hailMaryCount++; renderSlide(step); updateBeadTrack(); return; }
-    if ((step.type === 'chaplet-decade' || step.type === 'sh-decade') && hailMaryCount < 9) { hailMaryCount++; renderSlide(step); updateBeadTrack(); return; }
+    if (hailMaryCount < repeatMaxFor(step)) { hailMaryCount++; renderSlide(step); updateBeadTrack(); updateProgress(); return; }
     hailMaryCount = 0; currentStep++;
+    renderScreen();
+}
+
+function goBack() {
+    if (currentStep === 0 && hailMaryCount === 0) return;
+    if (hailMaryCount > 0) { hailMaryCount--; renderSlide(steps[currentStep]); updateBeadTrack(); updateProgress(); return; }
+    currentStep--;
+    hailMaryCount = repeatMaxFor(steps[currentStep]);
     renderScreen();
 }
 

@@ -1,4 +1,4 @@
-const CACHE = 'rosary-v1';
+const CACHE = 'rosary-v3';
 const ASSETS = [
     './',
     './index.html',
