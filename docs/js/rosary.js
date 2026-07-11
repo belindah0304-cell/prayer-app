@@ -654,8 +654,8 @@ function renderSlide(step) {
                 <div class="prayer-type-tag">The ${step.decade}${ordSuffix(step.decade)} Mystery</div>
                 <div class="mystery-title">${m.title}</div>
                 <div class="mystery-desc">${m.description}</div>
-                <div class="mystery-meditation">${m.meditation}</div>
                 <div class="fruit-wrap"><span class="fruit-label">Fruit</span><span class="fruit-text">${m.fruit}</span></div>
+                <div class="mystery-meditation">${m.meditation}</div>
                 ${scriptureHtml}
             </div>`;
         btn.textContent = 'Our Father →';
