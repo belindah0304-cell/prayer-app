@@ -1,4 +1,4 @@
-const CACHE = 'prayer-v9';
+const CACHE = 'prayer-v10';
 const ASSETS = [
     './',
     './index.html',

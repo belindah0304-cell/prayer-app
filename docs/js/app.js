@@ -221,6 +221,7 @@ const PRAYERS = {
     fatimaPrayer: { title: "Fatima Prayer", text: `O my Jesus, forgive us our sins,\nsave us from the fires of Hell,\nlead all souls to Heaven,\nespecially those who are in most need of Thy mercy. Amen.` },
     hailHolyQueen: { title: "Hail, Holy Queen", text: `Hail, Holy Queen, Mother of Mercy,\nour life, our sweetness, and our hope!\nTo thee do we cry, poor banished children of Eve;\nto thee do we send up our sighs,\nmourning and weeping in this valley of tears.\nTurn then, most gracious Advocate,\nthine eyes of mercy toward us;\nand after this our exile,\nshow unto us the blessed fruit of thy womb, Jesus.\nO clement, O loving, O sweet Virgin Mary.\nPray for us, O Holy Mother of God,\nthat we may be made worthy of the promises of Christ. Amen.` },
     closingPrayer: { title: "Closing Prayer", text: `O God, whose only begotten Son,\nby His life, death, and resurrection,\nhas purchased for us the rewards of eternal life,\ngrant, we beseech Thee,\nthat meditating upon these mysteries\nof the Most Holy Rosary of the Blessed Virgin Mary,\nwe may imitate what they contain\nand obtain what they promise,\nthrough the same Christ Our Lord. Amen.` },
+    divineAssistance: { title: "Divine Assistance", text: `May Divine Assistance remain always with us,\nand may the souls of the faithful departed,\nthrough the Mercy of God, rest in peace.\nAmen!` },
 };
 
 const CHAPLET_PRAYERS = {
@@ -271,6 +272,7 @@ function buildSteps(data) {
     }
     s.push({ type:'prayer', prayer:'hailHolyQueen', section:'Closing' });
     s.push({ type:'prayer', prayer:'closingPrayer', section:'Closing' });
+    s.push({ type:'prayer', prayer:'divineAssistance', section:'Closing' });
     s.push({ type:'finished' });
     return s;
 }
