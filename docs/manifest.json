@@ -1,6 +1,6 @@
 {
-    "name": "The Rosary",
-    "short_name": "Rosary",
+    "name": "Prayer",
+    "short_name": "Prayer",
     "description": "Pray the Holy Rosary",
     "start_url": ".",
     "display": "standalone",
