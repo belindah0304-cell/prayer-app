@@ -367,14 +367,17 @@ function buildPrayScreen() {
 
     const footer = document.createElement('div');
     footer.className = 'pray-footer'; footer.id = 'prayFooter';
+    const buttonRow = document.createElement('div');
+    buttonRow.className = 'pray-footer-buttons';
     const prevBtn = document.createElement('button');
     prevBtn.className = 'btn-next secondary'; prevBtn.id = 'btnPrev'; prevBtn.textContent = '← Previous';
     prevBtn.addEventListener('click', goBack);
-    footer.appendChild(prevBtn);
+    buttonRow.appendChild(prevBtn);
     const btn = document.createElement('button');
     btn.className = 'btn-next'; btn.id = 'btnNext'; btn.textContent = 'Continue';
     btn.addEventListener('click', advance);
-    footer.appendChild(btn);
+    buttonRow.appendChild(btn);
+    footer.appendChild(buttonRow);
     footer.appendChild(Object.assign(document.createElement('div'), { className:'swipe-hint', textContent:'Tap to continue' }));
     screen.appendChild(footer);
 

@@ -553,6 +553,20 @@ body {
     background: linear-gradient(to top, var(--bg) 80%, transparent);
 }
 
+.pray-footer-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    max-width: 360px;
+}
+
+.pray-footer-buttons .btn-next {
+    width: auto;
+    max-width: none;
+    flex: 1;
+}
+
 .btn-next {
     width: 100%;
     max-width: 360px;
