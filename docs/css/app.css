@@ -343,6 +343,10 @@ body {
     flex-shrink: 0;
 }
 
+#counterBadge {
+    display: none;
+}
+
 /* Bead track */
 .bead-track {
     display: flex;
